@@ -22,26 +22,16 @@ galleryMarkUp.insertAdjacentHTML('beforeend', galleryEl)
 
 galleryMarkUp.addEventListener('click', onImgClick)
 
-function onImgClick(evt) {
-    evt.preventDefault();
-
-    if (evt.target.nodeName !== 'IMG') {
-        return;
+function openBigImag(target) {
+  const instance = basicLightbox.create(`
+    <img src="${target}" width="800" height="600">
+`);
+  instance.show();
+  console.dir(instance);
+  galleryList.addEventListener("keydown", (e) => {
+    if (e.code === "Escape") {
+      instance.close();
     }
-
-    const modal = basicLightbox.create(
-        `<img src="${evt.target.dataset.source}" width="800" height="600">`,
-
-        {   onShow: () => window.addEventListener('keydown', onEscKeyPress),
-            onClose: () => window.removeEventListener('keydown', onEscKeyPress),
-        }
-    );
-    
-    modal.show();
-
-    function onEscKeyPress(evt) {   
-        if (evt.code === "Escape") {
-            modal.close();
-        }
-    }
+  });
 }
+
