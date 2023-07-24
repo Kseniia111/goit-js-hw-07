@@ -2,7 +2,7 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 //console.log(galleryItems);
 
-const galleryMarkUp = document.querySelector('.gallery');
+const gallery = document.querySelector('.gallery');
 
 const galleryEl = galleryItems
     .map(({ preview, description, original }) => 
@@ -16,20 +16,26 @@ const galleryEl = galleryItems
             />
         </a>
     </li>`)
-    .join('');
+  .join('');
+    
+gallery.insertAdjacentHTML('beforeend', galleryEl)
 
-galleryMarkUp.insertAdjacentHTML('beforeend', galleryEl)
+gallery.addEventListener('click', onImgClick)
 
-galleryMarkUp.addEventListener('click', onImgClick)
+function onImgClick(evt) {
+  evt.preventDefault();
 
-function openBigImag(target) {
+  const itemLink = evt.target;
+  
   const instance = basicLightbox.create(`
-    <img src="${target}" width="800" height="600">
+    <img src="${evt.target.dataset.source}" width="800" height="600">
 `);
   instance.show();
+
   console.dir(instance);
-  galleryList.addEventListener("keydown", (e) => {
-    if (e.code === "Escape") {
+
+  galleryEl.addEventListener("keydown", (evt) => {
+    if (evt.code === "Escape") {
       instance.close();
     }
   });
