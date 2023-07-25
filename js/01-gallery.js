@@ -24,8 +24,11 @@ gallery.addEventListener('click', onImgClick)
 
 function onImgClick(evt) {
   evt.preventDefault();
-
+  
   const itemLink = evt.target;
+  if (evt.target.nodeName !== 'IMG') {
+        return;
+  }
   
   const instance = basicLightbox.create(`
     <img src="${evt.target.dataset.source}" width="800" height="600">
